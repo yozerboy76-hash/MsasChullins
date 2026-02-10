@@ -5,16 +5,23 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Eksekusi Panel & Tunneling
+      - name: Instalasi Total & Tunneling
         run: |
-          sudo apt update && sudo apt install -y curl
-          # Mengaktifkan Akses Publik via Cloudflare (Tunnel)
+          # 1. Update & Install Tools
+          sudo apt-get update
+          sudo apt-get install -y curl php8.3-cli php8.3-gd php8.3-mysql php8.3-mbstring php8.3-xml php8.3-curl php8.3-zip tar unzip
+
+          # 2. Setup Panel Files
+          sudo mkdir -p /var/www/pterodactyl
+          cd /var/www/pterodactyl
+          sudo curl -Lo panel.tar.gz https://github.com/pterodactyl/panel/releases/latest/download/panel.tar.gz
+          sudo tar -xzvf panel.tar.gz
+          sudo chmod -R 755 storage/* bootstrap/cache/
+
+          # 3. Jalankan Web Server Internal (Port 80)
+          sudo php artisan serve --port=80 & 
+          
+          # 4. Aktifkan Tunnel Cloudflare
           curl -L --output cloudflared.deb https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb
           sudo dpkg -i cloudflared.deb
-          
-          echo "------------------------------------------------"
-          echo "☬ MENGHUBUNGKAN SINGGASANA KE CLOUD... ☬"
-          echo "------------------------------------------------"
-          
-          # Perintah ini akan membuka akses panel Tuan ke internet
           sudo cloudflared tunnel --url http://localhost:80
