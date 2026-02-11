@@ -1,901 +1,295 @@
 <!DOCTYPE html>
-
 <html lang="id">
-
 <head>
-
-  <meta charset="UTF-8">
-
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
-  <title>ElCrasher - Myhelda🤍 Login</title>
-
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-
-  <style>
-
-    :root {
-
-      --primary: #FF6B9D;
-
-      --secondary: #A78BFA;
-
-      --accent: #60EFFF;
-
-      --bg-dark: #0A0A1F;
-
-      --bg-card: rgba(20, 20, 45, 0.6);
-
-      --text-main: #FFFFFF;
-
-      --text-muted: #B4B4C8;
-
-    }
-
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    body {
-
-      font-family: 'Poppins', sans-serif;
-
-      background: var(--bg-dark);
-
-      color: var(--text-main);
-
-      height: 100vh;
-
-      display: flex;
-
-      justify-content: center;
-
-      align-items: center;
-
-      overflow: hidden;
-
-      position: relative;
-
-    }
-
-    /* Animated Background */
-
-    .bg-anime {
-
-      position: fixed;
-
-      top: 0; left: 0;
-
-      width: 100%; height: 100%;
-
-      background: 
-
-        radial-gradient(circle at 20% 50%, rgba(255, 107, 157, 0.15), transparent 50%),
-
-        radial-gradient(circle at 80% 50%, rgba(167, 139, 250, 0.15), transparent 50%),
-
-        radial-gradient(circle at 50% 80%, rgba(96, 239, 255, 0.1), transparent 50%);
-
-      z-index: 0;
-
-      animation: bgShift 15s ease-in-out infinite alternate;
-
-    }
-
-    @keyframes bgShift {
-
-      0% { transform: scale(1) rotate(0deg); }
-
-      100% { transform: scale(1.1) rotate(5deg); }
-
-    }
-
-    /* Sakura Petals */
-
-    .sakura {
-
-      position: fixed;
-
-      width: 10px; height: 10px;
-
-      background: linear-gradient(135deg, var(--primary), var(--secondary));
-
-      border-radius: 50% 0;
-
-      opacity: 0.3;
-
-      animation: fall linear infinite;
-
-      z-index: 1;
-
-    }
-
-    @keyframes fall {
-
-      0% { transform: translateY(-10vh) rotate(0deg); }
-
-      100% { transform: translateY(110vh) rotate(360deg); }
-
-    }
-
-    /* Grid Overlay */
-
-    .grid-overlay {
-
-      position: fixed;
-
-      top: 0; left: 0;
-
-      width: 100%; height: 100%;
-
-      background-image: 
-
-        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-
-        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-
-      background-size: 30px 30px;
-
-      z-index: 1;
-
-      pointer-events: none;
-
-    }
-
-    /* Login Card */
-
-    .login-card {
-
-      position: relative;
-
-      z-index: 10;
-
-      width: 90%;
-
-      max-width: 420px;
-
-      padding: 50px 40px;
-
-      background: var(--bg-card);
-
-      backdrop-filter: blur(30px);
-
-      border-radius: 24px;
-
-      border: 1px solid rgba(255, 255, 255, 0.1);
-
-      box-shadow: 0 25px 80px rgba(0, 0, 0, 0.4), 0 0 1px rgba(255, 107, 157, 0.5);
-
-      opacity: 0;
-
-      transform: translateY(30px);
-
-      animation: cardEntry 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-
-    }
-
-    @keyframes cardEntry {
-
-      to { opacity: 1; transform: translateY(0); }
-
-    }
-
-    /* Gradient Border */
-
-    .login-card::before {
-
-      content: '';
-
-      position: absolute;
-
-      inset: 0;
-
-      border-radius: 24px;
-
-      padding: 1px;
-
-      background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
-
-      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-
-      -webkit-mask-composite: xor;
-
-      mask-composite: exclude;
-
-      opacity: 0.6;
-
-      animation: borderGlow 3s ease-in-out infinite;
-
-    }
-
-    @keyframes borderGlow {
-
-      0%, 100% { opacity: 0.6; }
-
-      50% { opacity: 1; }
-
-    }
-
-    /* Logo */
-
-    .logo-section {
-
-      text-align: center;
-
-      margin-bottom: 35px;
-
-    }
-
-    .logo-img {
-
-      width: 100px; height: 100px;
-
-      border-radius: 50%;
-
-      object-fit: cover;
-
-      border: 3px solid rgba(255, 107, 157, 0.3);
-
-      padding: 3px;
-
-      margin-bottom: 20px;
-
-      animation: logoFloat 3s ease-in-out infinite;
-
-      box-shadow: 0 10px 40px rgba(255, 107, 157, 0.3);
-
-    }
-
-    @keyframes logoFloat {
-
-      0%, 100% { transform: translateY(0); }
-
-      50% { transform: translateY(-10px); }
-
-    }
-
-    h1 {
-
-      font-family: 'Space Grotesk', sans-serif;
-
-      font-size: 32px;
-
-      font-weight: 700;
-
-      background: linear-gradient(135deg, var(--primary), var(--accent));
-
-      -webkit-background-clip: text;
-
-      -webkit-text-fill-color: transparent;
-
-      margin-bottom: 8px;
-
-      letter-spacing: -1px;
-
-    }
-
-    .subtitle {
-
-      font-size: 14px;
-
-      color: var(--text-muted);
-
-      font-weight: 300;
-
-      letter-spacing: 2px;
-
-    }
-
-    /* Error Message */
-
-    .error-message {
-
-      display: none;
-
-      background: rgba(255, 107, 157, 0.1);
-
-      border-left: 3px solid var(--primary);
-
-      border-radius: 12px;
-
-      padding: 15px;
-
-      margin-bottom: 25px;
-
-      font-size: 13px;
-
-      color: var(--primary);
-
-      animation: shake 0.5s;
-
-    }
-
-    @keyframes shake {
-
-      0%, 100% { transform: translateX(0); }
-
-      25% { transform: translateX(-10px); }
-
-      75% { transform: translateX(10px); }
-
-    }
-
-    /* Form */
-
-    .input-group {
-
-      position: relative;
-
-      margin-bottom: 25px;
-
-    }
-
-    .input-group label {
-
-      display: block;
-
-      font-size: 12px;
-
-      color: var(--accent);
-
-      margin-bottom: 10px;
-
-      font-weight: 600;
-
-      letter-spacing: 1px;
-
-      text-transform: uppercase;
-
-    }
-
-    .input-wrapper {
-
-      position: relative;
-
-    }
-
-    input {
-
-      width: 100%;
-
-      padding: 16px 20px 16px 50px;
-
-      background: rgba(0, 0, 0, 0.3);
-
-      border: 1px solid rgba(255, 255, 255, 0.1);
-
-      border-radius: 14px;
-
-      color: var(--text-main);
-
-      font-family: 'Poppins', sans-serif;
-
-      font-size: 16px;
-
-      outline: none;
-
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-
-    }
-
-    input:focus {
-
-      border-color: var(--primary);
-
-      background: rgba(0, 0, 0, 0.5);
-
-      box-shadow: 0 0 0 4px rgba(255, 107, 157, 0.1);
-
-    }
-
-    #key:focus {
-
-      border-color: var(--secondary);
-
-      box-shadow: 0 0 0 4px rgba(167, 139, 250, 0.1);
-
-    }
-
-    .input-wrapper i {
-
-      position: absolute;
-
-      left: 18px;
-
-      top: 50%;
-
-      transform: translateY(-50%);
-
-      color: var(--text-muted);
-
-      font-size: 18px;
-
-      transition: 0.3s;
-
-    }
-
-    input:focus ~ i {
-
-      color: var(--primary);
-
-    }
-
-    #key:focus ~ i {
-
-      color: var(--secondary);
-
-    }
-
-    /* Button */
-
-    .btn-login {
-
-      width: 100%;
-
-      padding: 18px;
-
-      background: linear-gradient(135deg, var(--primary), var(--secondary));
-
-      border: none;
-
-      border-radius: 14px;
-
-      color: var(--text-main);
-
-      font-family: 'Space Grotesk', sans-serif;
-
-      font-size: 15px;
-
-      font-weight: 700;
-
-      letter-spacing: 1px;
-
-      cursor: pointer;
-
-      position: relative;
-
-      overflow: hidden;
-
-      transition: transform 0.3s;
-
-      box-shadow: 0 10px 30px rgba(255, 107, 157, 0.3);
-
-    }
-
-    .btn-login::before {
-
-      content: '';
-
-      position: absolute;
-
-      top: 0; left: -100%;
-
-      width: 100%; height: 100%;
-
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-
-      transition: 0.5s;
-
-    }
-
-    .btn-login:hover {
-
-      transform: translateY(-2px);
-
-      box-shadow: 0 15px 40px rgba(255, 107, 157, 0.4);
-
-    }
-
-    .btn-login:hover::before {
-
-      left: 100%;
-
-    }
-
-    .loader {
-
-      display: none;
-
-      width: 22px; height: 22px;
-
-      border: 3px solid rgba(255,255,255,0.3);
-
-      border-radius: 50%;
-
-      border-top-color: #fff;
-
-      animation: spin 0.8s linear infinite;
-
-      margin: 0 auto;
-
-    }
-
-    @keyframes spin {
-
-      to { transform: rotate(360deg); }
-
-    }
-
-    /* Footer */
-
-    .footer {
-
-      margin-top: 30px;
-
-      text-align: center;
-
-    }
-
-    .footer a {
-
-      color: var(--text-muted);
-
-      text-decoration: none;
-
-      font-size: 13px;
-
-      display: inline-flex;
-
-      align-items: center;
-
-      gap: 8px;
-
-      padding: 10px 20px;
-
-      border-radius: 12px;
-
-      border: 1px solid rgba(255, 255, 255, 0.1);
-
-      transition: 0.3s;
-
-    }
-
-    .footer a:hover {
-
-      color: var(--text-main);
-
-      background: rgba(255, 255, 255, 0.05);
-
-      border-color: var(--primary);
-
-    }
-
-    .credits {
-
-      margin-top: 20px;
-
-      font-size: 11px;
-
-      color: #666;
-
-      text-align: center;
-
-    }
-
-    .credits a {
-
-      color: var(--accent);
-
-      text-decoration: none;
-
-    }
-
-    /* Responsive */
-
-    @media (max-width: 480px) {
-
-      .login-card {
-
-        padding: 40px 25px;
-
-      }
-
-      h1 { font-size: 28px; }
-
-      .logo-img { width: 80px; height: 80px; }
-
-    }
-
-  </style>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>El x Ryzen V.el-xiters | CRASHERS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+    <style>
+        /* ================================================================
+           [☬] AREA SETTING MANUAL (HARDCODE) [☬]
+           Ganti Link di bawah ini sesuai keinginan Tuan Elxiters!
+           ================================================================
+        */
+        :root {
+            --primary: #8b5cf6;
+            --secondary: #00eaff;
+            --bg-dark: #050505;
+            
+            /* GANTI LINK FOTO PROFIL DI SINI (Pastikan link gambar langsung) */
+            --owner-photo: url('https://i.postimg.cc/jSbFSQwY/1770779903495-58396593-aacc-4e16-a4af-ac2a1c39505e.png'); 
+            
+            /* GANTI LINK VIDEO LOGIN DI SINI */
+            --login-video: url('https://i.postimg.cc/BvPwnYSM/VID-20260211-WA0110-ezgif-com-video-to-gif-converter.gif');
+
+            /* GANTI LINK LAGU MP3 DI SINI */
+            --audio-source: "https://a.top4top.io/m_3693ke5un4.mp3";
+        }
+        /* ================================================================ */
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; -webkit-tap-highlight-color: transparent; }
+        body { background: var(--bg-dark); color: white; overflow: hidden; height: 100vh; }
+
+        /* --- LOGIN SYSTEM --- */
+        #login-gate { position: fixed; inset: 0; z-index: 9999; background: #000; display: flex; align-items: center; justify-content: center; padding: 20px; transition: 0.5s; }
+        .login-card { width: 100%; max-width: 380px; background: rgba(15,15,15,0.95); border: 1px solid #222; border-radius: 30px; padding: 30px; text-align: center; backdrop-filter: blur(15px); }
+        .anim-vid { width: 100%; height: 160px; background-image: var(--login-video); background-size: cover; background-position: center; border-radius: 20px; border: 2px solid var(--primary); margin-bottom: 20px; }
+        .login-input { width: 100%; padding: 15px; background: #000; border: 1px solid #333; border-radius: 12px; color: #fff; margin-bottom: 12px; outline: none; }
+        .btn-login { width: 100%; padding: 15px; background: var(--primary); border: none; border-radius: 12px; color: #fff; font-weight: bold; font-family: 'Rajdhani'; letter-spacing: 2px; cursor: pointer; }
+
+        /* --- DASHBOARD --- */
+        #main-app { display: none; height: 100vh; overflow-y: auto; padding-bottom: 100px; }
+        .top-bar { display: flex; justify-content: space-between; align-items: center; padding: 20px; background: #000; border-bottom: 1px solid #111; position: sticky; top: 0; z-index: 100; }
+        
+        .profile-box { background: linear-gradient(145deg, #1a1a2e, #000); margin: 20px; padding: 25px; border-radius: 25px; border: 1px solid var(--primary); text-align: center; }
+        .owner-img { width: 80px; height: 80px; border-radius: 50%; border: 3px solid var(--secondary); background-image: var(--owner-photo); background-size: cover; background-position: center; margin: 0 auto 10px; }
+
+        /* Stats */
+        .server-stats { background: rgba(20,20,20,0.8); margin: 0 20px; padding: 20px; border-radius: 20px; border-left: 4px solid var(--primary); }
+        .stat-row { display: flex; justify-content: space-between; margin: 10px 0; font-size: 13px; }
+        .stat-val { color: var(--secondary); font-weight: bold; }
+
+        /* Grid Menu */
+        .menu-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; padding: 20px; }
+        .menu-item { background: #0f0f0f; padding: 15px 5px; border-radius: 18px; border: 1px solid #1a1a1a; text-align: center; cursor: pointer; }
+        .menu-item i { font-size: 20px; color: var(--primary); display: block; margin-bottom: 5px; }
+        .menu-item span { font-size: 10px; color: #aaa; }
+
+        /* Sections */
+        .content-sec { display: none; padding: 0 20px; animation: fadeIn 0.4s ease; }
+        .active-sec { display: block; }
+        .card-wrap { background: #0a0a0a; border: 1px solid #1a1a1a; border-radius: 20px; padding: 20px; margin-bottom: 20px; }
+        .c-input { width: 100%; padding: 15px; background: #000; border: 1px solid #333; border-radius: 12px; color: white; margin: 10px 0; outline: none; }
+        .btn-work { width: 100%; padding: 15px; border: none; border-radius: 12px; font-weight: bold; font-family: 'Rajdhani'; cursor: pointer; color: white; }
+
+        .tools-tabs { display: flex; gap: 10px; margin-bottom: 15px; }
+        .t-tab { flex: 1; padding: 10px; background: #111; border: 1px solid #333; border-radius: 10px; text-align: center; cursor: pointer; font-size: 12px; }
+        .t-tab.active-tab { background: var(--primary); border-color: var(--primary); color: white; }
+
+        /* Nav Bar */
+        .nav-bar { position: fixed; bottom: 0; left: 0; right: 0; height: 75px; background: #000; border-top: 1px solid #111; display: flex; justify-content: space-around; align-items: center; z-index: 1000; }
+        .nav-btn { color: #444; text-align: center; font-size: 10px; cursor: pointer; transition: 0.3s; }
+        .nav-btn.active { color: var(--primary); transform: translateY(-5px); }
+        .nav-btn i { font-size: 20px; display: block; margin-bottom: 4px; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
 </head>
-
 <body>
 
-  <div class="bg-anime"></div>
+    <audio id="audioDash" loop preload="auto"></audio>
 
-  <div class="grid-overlay"></div>
-
-  <div class="login-card">
-
-    <div class="logo-section">
-
-      <img src="https://files.catbox.moe/kzl42l.jpg" alt="Elxiters Logo" class="logo-img">
-
-      <h1>ElxitersSystems</h1>
-
-      <p class="subtitle">Myhelda🤍 ACCESS v1.0</p>
-
+    <div id="login-gate">
+        <div class="login-card">
+            <div class="anim-vid"></div>
+            <h2 style="font-family:'Rajdhani'; letter-spacing:3px;"> V-ZERO</h2>
+            <p style="font-size:10px; color:#555; margin-bottom:20px;">MY HELDA🤍EL REQUIRED</p>
+            <input type="text" id="user" class="login-input" placeholder="User">
+            <input type="password" id="pass" class="login-input" placeholder="Pass">
+            <button class="btn-login" onclick="validateLogin()">INITIALIZE</button>
+        </div>
     </div>
 
-    <div class="error-message" id="errorMessage">
+    <div id="main-app">
+        <div class="top-bar">
+            <i class="fa fa-braille" style="color:var(--primary)"></i>
+            <span style="font-family:'Rajdhani'; font-weight:bold; letter-spacing:2px;">El x Ryzen V.el-xiters</span>
+            <i class="fa fa-user-secret" style="color:var(--primary); font-size:24px;" onclick="showProfile()"></i>
+        </div>
 
-      <i class="fas fa-exclamation-circle"></i>
+        <div id="home" class="content-sec active-sec">
+            <div class="profile-box">
+                <div class="owner-img"></div>
+                <h3 style="font-family:'Rajdhani'">Elxiters</h3>
+                <p style="font-size:11px; color:var(--secondary)">Role: OWNER • Status: IMMORTAL</p>
+            </div>
 
-      <span id="errorText">Invalid credentials!</span>
+            <div class="server-stats">
+                <h4 style="font-size:14px; margin-bottom:10px;"><i class="fa fa-server"></i> Server Stats</h4>
+                <div class="stat-row"><span>Online Users</span><span class="stat-val">2</span></div>
+                <div class="stat-row"><span>Status</span><span class="stat-val" style="color:#0f0">SECURE</span></div>
+                <div class="stat-row"><span>Music</span><span class="stat-val">PLAYING</span></div>
+            </div>
 
+            <div class="menu-grid">
+                <div class="menu-item" onclick="changeSec('bug')"><i class="fa fa-skull"></i><span>Bug</span></div>
+                <div class="menu-item" onclick="changeSec('tools')"><i class="fa fa-film"></i><span>Theater</span></div>
+                <div class="menu-item" onclick="changeSec('chat')"><i class="fa fa-robot"></i><span>AI Chat</span></div>
+                <div class="menu-item" onclick="pairingMode()"><i class="fa fa-qrcode"></i><span>Pairing</span></div>
+                <div class="menu-item" onclick="Swal.fire('INFO', 'Audio & Logo sudah tertanam di System.', 'info')"><i class="fa fa-cog"></i><span>Config</span></div>
+                <div class="menu-item" onclick="location.reload()"><i class="fa fa-sync"></i><span>Reload</span></div>
+                <div class="menu-item" onclick="changeSec('tools')"><i class="fa fa-tv"></i><span>Anime</span></div>
+                <div class="menu-item" onclick="window.open('https://t.me/')"><i class="fab fa-telegram"></i><span>Group</span></div>
+            </div>
+        </div>
+
+        <div id="bug" class="content-sec">
+            <div class="card-wrap">
+                <h3 style="color:var(--primary); font-family:'Rajdhani'">BUG TERMINAL</h3>
+                <input type="tel" id="target-no" class="c-input" placeholder="Target Number (628xx)">
+                <select id="bug-method" class="c-input">
+                    <option value="buldoz">FC CRASH (Buildozer V2)</option>
+                    <option value="hard">Crash Delay Hard</option>
+                    <option value="troli">Bootloop Troli</option>
+                    <option value="ui">System UI Dead</option>
+                    <option value="reset">Reset Gallery</option>
+                    <option value="freeze">Device Freeze</option>
+                </select>
+                <button class="btn-work" style="background:var(--primary);" onclick="launchBug()">🚀 SEND BUG</button>
+            </div>
+        </div>
+
+        <div id="tools" class="content-sec">
+            <div class="card-wrap">
+                <h3 style="color:var(--secondary); margin-bottom:15px;">ENTERTAINMENT HUB</h3>
+                <div class="tools-tabs">
+                    <div class="t-tab active-tab" onclick="switchTool('yt')">YouTube</div>
+                    <div class="t-tab" onclick="switchTool('anime')">Anime St.</div>
+                </div>
+                <div id="tool-yt">
+                    <iframe id="player-yt" width="100%" style="aspect-ratio:16/9; border-radius:15px;" src="https://www.youtube.com/embed/jfKfPfyJRdk" frameborder="0" allowfullscreen></iframe>
+                    <input type="text" id="yt-link" class="c-input" placeholder="Paste YouTube ID / Link">
+                    <button class="btn-work" style="background:#cc0000;" onclick="loadYT()">PLAY YOUTUBE</button>
+                </div>
+                <div id="tool-anime" style="display:none;">
+                    <div style="background:#000; padding:10px; border-radius:10px; text-align:center; margin-bottom:10px;">
+                        <img src="https://i.pinimg.com/originals/e8/15/b9/e815b94b79e49c9535eb5822b1007727.gif" style="width:100%; border-radius:10px;">
+                        <h4 style="margin-top:5px; color:var(--primary);">DARK ANIME STATION</h4>
+                    </div>
+                    <select id="anime-select" class="c-input">
+                        <option value="MjiC59Y08hM">Solo Leveling (Action)</option>
+                        <option value="bV0QrNoOuTk">Tokyo Ghoul (Dark)</option>
+                        <option value="A2C0lB2fC5Q">Blue Lock (Sport)</option>
+                        <option value="qNGBvujL0kU">Chainsaw Man (Gore)</option>
+                    </select>
+                    <button class="btn-work" style="background:var(--primary);" onclick="playAnime()">WATCH ANIME</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="chat" class="content-sec">
+            <div class="card-wrap" style="height:400px; display:flex; flex-direction:column;">
+                <div id="chat-logs" style="flex:1; overflow-y:auto; font-size:12px; padding-bottom:10px;">
+                    <div style="color:var(--primary)">[SYSTEM]: V-xiters Online. Welcome elxiters.</div>
+                </div>
+                <div style="display:flex; gap:10px;">
+                    <input type="text" id="ai-input" class="c-input" style="margin:0" placeholder="Command...">
+                    <button onclick="askAI()" style="background:var(--primary); border:none; padding:0 15px; border-radius:12px;"><i class="fa fa-paper-plane"></i></button>
+                </div>
+            </div>
+        </div>
+
+        <div class="nav-bar">
+            <div class="nav-btn active" onclick="changeSec('home')"><i class="fa fa-home"></i><span>Home</span></div>
+            <div class="nav-btn" onclick="changeSec('bug')"><i class="fa fa-skull"></i><span>Bug</span></div>
+            <div class="nav-btn" onclick="changeSec('tools')"><i class="fa fa-play-circle"></i><span>Tools</span></div>
+            <div class="nav-btn" onclick="changeSec('chat')"><i class="fa fa-comment-dots"></i><span>Chat</span></div>
+        </div>
     </div>
 
-    <form id="loginForm" method="POST" action="/auth">
-
-      <div class="input-group">
-
-        <label>Identity Protocol</label>
-
-        <div class="input-wrapper">
-
-          <input type="text" name="username" placeholder="Username / Agent ID" required autocomplete="off" autofocus>
-
-          <i class="fas fa-user"></i>
-
-        </div>
-
-      </div>
-
-      <div class="input-group">
-
-        <label>Security Key</label>
-
-        <div class="input-wrapper">
-
-          <input type="password" name="key" id="key" placeholder="Access Key" required>
-
-          <i class="fas fa-key"></i>
-
-        </div>
-
-      </div>
-
-      <button type="submit" class="btn-login">
-
-        <span id="btnText">GASKUN KONTOL</span>
-
-        <div class="loader" id="loader"></div>
-
-      </button>
-
-      <div class="footer">
-
-        <a href="https://t.me/ElxitersCrasher" target="_blank">
-
-          <i class="fab fa-telegram"></i> Join Elxites Community
-
-        </a>
-
-      </div>
-
-      <div class="credits">
-
-        Developed by <a href="https://t.me/impixz" target="_blank">@impixz</a>
-
-      </div>
-
-    </form>
-
-  </div>
-
-  <script>
-
-    // Create sakura petals
-
-    for(let i = 0; i < 15; i++) {
-
-      const sakura = document.createElement('div');
-
-      sakura.className = 'sakura';
-
-      sakura.style.left = Math.random() * 100 + '%';
-
-      sakura.style.animationDuration = (Math.random() * 5 + 5) + 's';
-
-      sakura.style.animationDelay = Math.random() * 5 + 's';
-
-      document.body.appendChild(sakura);
-
-    }
-
-    const form = document.getElementById('loginForm');
-
-    const btn = document.querySelector('.btn-login');
-
-    const btnText = document.getElementById('btnText');
-
-    const loader = document.getElementById('loader');
-
-    const errorMessage = document.getElementById('errorMessage');
-
-    const errorText = document.getElementById('errorText');
-
-    const urlParams = new URLSearchParams(window.location.search);
-
-    const errorMsg = urlParams.get('msg');
-
-    
-
-    if (errorMsg) {
-
-      errorText.textContent = decodeURIComponent(errorMsg);
-
-      errorMessage.style.display = 'block';
-
-      setTimeout(() => errorMessage.style.display = 'none', 5000);
-
-    }
-
-    const usernameInput = document.querySelector('input[name="username"]');
-
-    const savedUsername = localStorage.getItem('Elxiters_username');
-
-    if (savedUsername) usernameInput.value = savedUsername;
-
-    form.addEventListener('submit', async (e) => {
-
-      e.preventDefault();
-
-      errorMessage.style.display = 'none';
-
-      
-
-      const username = usernameInput.value.trim();
-
-      const key = document.getElementById('key').value.trim();
-
-      
-
-      if (!username || !key) {
-
-        showError('Please fill in both fields!');
-
-        return;
-
-      }
-
-      
-
-      localStorage.setItem('Elxiters_username', username);
-
-      
-
-      btn.disabled = true;
-
-      btn.style.opacity = '0.8';
-
-      btnText.style.display = 'none';
-
-      loader.style.display = 'block';
-
-      
-
-      try {
-
-        const response = await fetch('/auth', {
-
-          method: 'POST',
-
-          body: new URLSearchParams({ username, key }),
-
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-
-        });
-
-        
-
-        if (response.redirected) {
-
-          window.location.href = response.url;
-
-          return;
-
+    <script>
+        // ☬ LOAD AUDIO & ASSETS ☬
+        const style = getComputedStyle(document.documentElement);
+        const audioUrl = style.getPropertyValue('--audio-source').trim().replace(/"/g, '');
+        const audioPlayer = document.getElementById('audioDash');
+        audioPlayer.src = audioUrl;
+
+        function validateLogin() {
+            const u = document.getElementById('user').value;
+            const p = document.getElementById('pass').value;
+
+            // Login tetap el / el sesuai snippet aslimu
+            if(u === 'el' && p === 'el') {
+                // FORCE PLAY AUDIO (PENTING!)
+                audioPlayer.load();
+                audioPlayer.play().catch(e => console.log("Audio play blocked, but initialized."));
+                
+                document.getElementById('login-gate').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('login-gate').style.display = 'none';
+                    document.getElementById('main-app').style.display = 'block';
+                }, 500);
+            } else {
+                Swal.fire('DENIED', 'User/Pass Salah!', 'error');
+            }
         }
 
-        
-
-        const responseText = await response.text();
-
-        let error = 'Invalid username or key!';
-
-        
-
-        const tempDiv = document.createElement('div');
-
-        tempDiv.innerHTML = responseText;
-
-        
-
-        const metaRefresh = tempDiv.querySelector('meta[http-equiv="refresh"]');
-
-        if (metaRefresh) {
-
-          const content = metaRefresh.getAttribute('content');
-
-          const match = content.match(/msg=([^&]+)/);
-
-          if (match) error = decodeURIComponent(match[1].replace(/\+/g, ' '));
-
+        function launchBug() {
+            const t = document.getElementById('target-no').value;
+            const m = document.getElementById('bug-method').value;
+            if(!t) return Swal.fire('Gagal', 'Nomor Target Kosong!', 'error');
+            Swal.fire({
+                title: 'SENDING ATTACK',
+                text: `${m} -> ${t}`,
+                icon: 'warning',
+                background: '#000', color: '#fff',
+                showConfirmButton: false, timer: 2000
+            }).then(() => { Swal.fire('SUCCESS', 'Target System Down!', 'success'); });
         }
 
-        
-
-        const urlMatch = responseText.match(/login\?msg=([^"]+)/);
-
-        if (urlMatch) error = decodeURIComponent(urlMatch[1].replace(/\+/g, ' '));
-
-        
-
-        showError(error);
-
-        
-
-      } catch (error) {
-
-        console.error('Login error:', error);
-
-        showError('Network error. Please check your connection.');
-
-      } finally {
-
-        resetButton();
-
-      }
-
-    });
-
-    
-
-    function showError(message) {
-
-      errorText.textContent = message;
-
-      errorMessage.style.display = 'block';
-
-      errorMessage.style.animation = 'none';
-
-      setTimeout(() => errorMessage.style.animation = 'shake 0.5s', 10);
-
-      setTimeout(() => {
-
-        if (errorMessage.style.display === 'block') {
-
-          errorMessage.style.display = 'none';
-
+        function switchTool(mode) {
+            document.querySelectorAll('.t-tab').forEach(t => t.classList.remove('active-tab'));
+            event.currentTarget.classList.add('active-tab');
+            if(mode === 'yt') {
+                document.getElementById('tool-yt').style.display = 'block';
+                document.getElementById('tool-anime').style.display = 'none';
+            } else {
+                document.getElementById('tool-yt').style.display = 'none';
+                document.getElementById('tool-anime').style.display = 'block';
+            }
         }
 
-      }, 5000);
+        function loadYT() {
+            let val = document.getElementById('yt-link').value;
+            if(val.includes('v=')) val = val.split('v=')[1].split('&')[0];
+            else if(val.includes('youtu.be/')) val = val.split('youtu.be/')[1];
+            if(val) document.getElementById('player-yt').src = "https://www.youtube.com/embed/" + val + "?autoplay=1";
+        }
 
-    }
+        function playAnime() {
+            const id = document.getElementById('anime-select').value;
+            document.getElementById('player-yt').src = "https://www.youtube.com/embed/" + id + "?autoplay=1&controls=0";
+            switchTool('yt'); 
+        }
 
-    
+        function changeSec(id) {
+            document.querySelectorAll('.content-sec').forEach(s => s.classList.remove('active-sec'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(id).classList.add('active-sec');
+            event.currentTarget.classList.add('active');
+        }
 
-    function resetButton() {
+        function showProfile() {
+            // FIX PEMBERSIHAN URL FOTO
+            let imgUrl = getComputedStyle(document.documentElement).getPropertyValue('--owner-photo').trim();
+            imgUrl = imgUrl.replace(/^url\(["']?/, '').replace(/["']?\)$/, '');
+            
+            Swal.fire({
+                title: 'SUPREME OWNER',
+                html: `<div style="text-align:center"><img src="${imgUrl}" style="width:100px; height:100px; border-radius:50%; border:3px solid var(--secondary); object-fit:cover;"><br><br><b>El x Ryzen V.el-xiters</b><br>Dark Developer</div>`,
+                background: '#000', color: '#fff'
+            });
+        }
 
-      btn.disabled = false;
+        function pairingMode() {
+             Swal.fire({ title: 'PAIRING', input: 'text', background:'#000', color:'#fff' })
+            .then(r => { if(r.value) Swal.fire('Connected', 'Session ID: XJ-9921 Active', 'success'); });
+        }
 
-      btn.style.opacity = '1';
-
-      btnText.style.display = 'block';
-
-      loader.style.display = 'none';
-
-    }
-
-    if (usernameInput.value.trim()) {
-
-      document.getElementById('key').focus();
-
-    }
-
-  </script>
-
+        function askAI() {
+            const i = document.getElementById('ai-input');
+            const b = document.getElementById('chat-logs');
+            if(!i.value) return;
+            b.innerHTML += `<div style="text-align:right; margin-bottom:10px; color:#aaa;">Me: ${i.value}</div>`;
+            i.value = '';
+            setTimeout(() => {
+                b.innerHTML += `<div style="color:var(--primary); margin-bottom:10px;">[AI]: Perintah diterima, Tuan.</div>`;
+                b.scrollTop = b.scrollHeight;
+            }, 500);
+        }
+    </script>
 </body>
-
 </html>
